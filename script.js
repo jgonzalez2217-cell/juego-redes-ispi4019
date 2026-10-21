@@ -88,14 +88,14 @@ const dispositivos = {
 };
 
 // ============================================
-// MISIONES
+// MISIONES (OPCIONES REESCRITAS SIN PISTAS OBVIAS)
 // ============================================
 const misiones = {
     vpn: {
         tag: "MISIÓN 01",
         titulo: "Configurar VPN Corporativa",
         escenario: "La empresa necesita conectar de forma segura la sucursal de Buenos Aires con la de Córdoba a través de Internet. Los datos confidenciales deben viajar cifrados para evitar interceptaciones.",
-        tecnico: "Una VPN (Virtual Private Network) crea un túnel cifrado sobre una red pública (Internet). Utiliza protocolos como IPsec, OpenVPN o WireGuard para encapsular y cifrar el tráfico, garantizando confidencialidad, integridad y autenticación. El router de cada sede actúa como gateway VPN.",
+        tecnico: "Una VPN (Virtual Private Network) crea un túnel cifrado sobre una red pública. Utiliza protocolos como IPsec u OpenVPN para encapsular y cifrar el tráfico, garantizando confidencialidad, integridad y autenticación. El router de cada sede actúa como gateway VPN.",
         pasos: [
             {
                 consigna: "¿Qué dispositivo debe instalar en cada sede para establecer el túnel VPN?",
@@ -105,40 +105,40 @@ const misiones = {
                 explicacion: "El Router es el dispositivo de Capa 3 que actúa como gateway entre redes. Soporta protocolos VPN como IPsec y puede cifrar el tráfico entre sedes remotas."
             },
             {
-                consigna: "¿Qué protocolo de Capa de Transporte se recomienda para una VPN moderna que deba atravesar firewalls restrictivos?",
+                consigna: "¿Qué protocolo y puerto se recomienda comúnmente para una VPN moderna que deba atravesar firewalls restrictivos manteniendo buen rendimiento?",
                 tipo: "opcion",
                 opciones: [
-                    "TCP puerto 80 (HTTP) - poco seguro",
-                    "UDP puerto 1194 (OpenVPN) - cifrado y flexible",
-                    "ICMP (ping) - no transporta datos",
-                    "FTP puerto 21 - solo para archivos"
+                    "TCP puerto 80 (HTTP)",
+                    "UDP puerto 1194 (OpenVPN)",
+                    "ICMP (Echo Request)",
+                    "FTP puerto 21"
                 ],
                 correcta: 1,
-                explicacion: "OpenVPN sobre UDP puerto 1194 es el estándar moderno. UDP es más rápido que TCP para tráfico cifrado, y el puerto 1194 suele estar permitido en firewalls corporativos."
+                explicacion: "OpenVPN sobre UDP puerto 1194 es el estándar moderno. UDP tiene menos sobrecarga que TCP para tráfico cifrado, y el puerto 1194 suele estar permitido en firewalls corporativos."
             },
             {
                 consigna: "Para autenticar los extremos del túnel VPN de forma segura, ¿qué método se debe implementar?",
                 tipo: "opcion",
                 opciones: [
-                    "Contraseña en texto plano compartida por email",
-                    "Certificados digitales X.509 con clave pública/privada",
-                    "No requiere autenticación, solo cifrado",
-                    "Dirección MAC del dispositivo"
+                    "Pre-shared key (PSK) estática compartida por correo electrónico",
+                    "Certificados digitales X.509 con infraestructura de clave pública (PKI)",
+                    "Autenticación basada únicamente en la dirección MAC del dispositivo",
+                    "Sin autenticación, confiando solo en el cifrado del túnel"
                 ],
                 correcta: 1,
-                explicacion: "Los certificados X.509 usan criptografía asimétrica (clave pública/privada). Son el método más seguro para autenticar ambos extremos del túnel VPN y prevenir ataques Man-in-the-Middle."
+                explicacion: "Los certificados X.509 usan criptografía asimétrica. Son el método más seguro para autenticar ambos extremos del túnel VPN y prevenir ataques Man-in-the-Middle, a diferencia de una PSK compartida."
             },
             {
                 consigna: "Una vez establecido el túnel, ¿qué tipo de direcciones IP deben usar las sedes para comunicarse internamente?",
                 tipo: "opcion",
                 opciones: [
-                    "Direcciones IP públicas de Internet",
+                    "Direcciones IP públicas enrutables de Internet",
                     "Direcciones IP privadas (RFC 1918) como 10.x.x.x o 192.168.x.x",
-                    "Direcciones MAC directamente",
-                    "Direcciones IPv6 link-local únicamente"
+                    "Direcciones MAC de las interfaces de red",
+                    "Direcciones IPv6 de enlace local (fe80::/10)"
                 ],
                 correcta: 1,
-                explicacion: "Las VPN site-to-site usan rangos IP privados (RFC 1918: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) para las redes internas. El túnel VPN enruta estos paquetes privados sobre Internet de forma cifrada."
+                explicacion: "Las VPN site-to-site usan rangos IP privados (RFC 1918) para las redes internas. El túnel VPN enruta estos paquetes privados sobre Internet de forma cifrada sin exponerlos."
             }
         ]
     },
@@ -153,16 +153,16 @@ const misiones = {
                 tipo: "dispositivo",
                 opciones: null,
                 correcta: "nic",
-                explicacion: "La NIC (Network Interface Card) o placa de red es la interfaz física que conecta la PC a la red. Sin ella, la PC no puede comunicarse por red y por lo tanto no puede recibir conexiones remotas."
+                explicacion: "La NIC (Network Interface Card) o placa de red es la interfaz física que conecta la PC a la red. Sin ella, la PC no puede comunicarse por red."
             },
             {
                 consigna: "La PC tiene IP privada 192.168.1.50 y está detrás de un router con NAT. ¿Qué configuración hay que hacer en el router para que sea accesible desde Internet?",
                 tipo: "opcion",
                 opciones: [
-                    "Cambiar la IP de la PC a una pública",
-                    "Configurar Port Forwarding del puerto RDP (3389) hacia la IP privada de la PC",
-                    "Desactivar el firewall del router",
-                    "Conectar la PC directamente al módem"
+                    "Asignar una dirección IP pública estática directamente a la PC",
+                    "Configurar Port Forwarding (NAT) del puerto 3389 hacia la IP privada de la PC",
+                    "Desactivar el firewall de Windows para permitir la conexión entrante",
+                    "Conectar la PC mediante un cable crossover directamente al router"
                 ],
                 correcta: 1,
                 explicacion: "Port Forwarding (redirección de puertos) mapea un puerto público del router (ej: 3389) a la IP privada de la PC. Así, las conexiones entrantes al router en ese puerto se redirigen a la PC interna."
@@ -177,19 +177,19 @@ const misiones = {
                     "Telnet puerto 23"
                 ],
                 correcta: 1,
-                explicacion: "RDP (Remote Desktop Protocol) es el protocolo propietario de Microsoft para escritorio remoto. Usa el puerto TCP 3389 por defecto y ofrece cifrado TLS, redirección de periféricos y sesiones multiusuario."
+                explicacion: "RDP es el protocolo propietario de Microsoft para escritorio remoto. Usa el puerto TCP 3389 por defecto y ofrece cifrado TLS, redirección de periféricos y sesiones multiusuario."
             },
             {
                 consigna: "Para mejorar la seguridad del acceso remoto, ¿qué medida adicional es RECOMENDABLE implementar?",
                 tipo: "opcion",
                 opciones: [
-                    "Usar la misma contraseña que el usuario de Windows",
-                    "Autenticación de dos factores (2FA) + contraseña fuerte",
-                    "No usar contraseña para facilitar el acceso",
-                    "Exponer el puerto 3389 directamente a Internet sin firewall"
+                    "Utilizar la misma contraseña del usuario local de Windows",
+                    "Implementar Autenticación de Dos Factores (2FA) junto con NLA",
+                    "Exponer el puerto 3389 directamente a Internet sin reglas de firewall",
+                    "Deshabilitar el cifrado de la sesión RDP para mejorar la velocidad"
                 ],
                 correcta: 1,
-                explicacion: "2FA (Two-Factor Authentication) agrega una segunda capa de seguridad más allá de la contraseña. Combinado con contraseñas fuertes y VPN, es la práctica recomendada para acceso remoto corporativo."
+                explicacion: "2FA (Two-Factor Authentication) agrega una segunda capa de seguridad más allá de la contraseña. Combinado con NLA (Network Level Authentication), es la práctica recomendada para acceso remoto corporativo."
             }
         ]
     },
@@ -204,38 +204,38 @@ const misiones = {
                 tipo: "dispositivo",
                 opciones: null,
                 correcta: "switch",
-                explicacion: "El Switch gestionable (managed switch) soporta VLANs (IEEE 802.1Q). Permite crear múltiples redes lógicas sobre la misma infraestructura física, aislando el tráfico broadcast de cada departamento."
+                explicacion: "El Switch gestionable (managed switch) soporta VLANs (IEEE 802.1Q). Permite crear múltiples redes lógicas sobre la misma infraestructura física, aislando el tráfico broadcast."
             },
             {
                 consigna: "Para que las VLANs de Ventas, RRHH e IT puedan comunicarse entre sí, ¿qué dispositivo adicional se necesita?",
                 tipo: "dispositivo",
                 opciones: null,
                 correcta: "router",
-                explicacion: "El Router (o switch Layer 3) realiza el enrutamiento inter-VLAN. Las VLANs son redes IP distintas, y solo un dispositivo de Capa 3 puede enrutar paquetes entre ellas usando sus direcciones IP."
+                explicacion: "El Router (o switch Layer 3) realiza el enrutamiento inter-VLAN. Las VLANs son redes IP distintas, y solo un dispositivo de Capa 3 puede enrutar paquetes entre ellas."
             },
             {
                 consigna: "¿Qué configuración se debe aplicar en los puertos del switch que conectan a las PCs de cada departamento?",
                 tipo: "opcion",
                 opciones: [
-                    "Puertos trunk que llevan todas las VLANs",
-                    "Puertos access asignados a la VLAN específica del departamento",
-                    "Dejar todos los puertos en VLAN 1 por defecto",
-                    "Desactivar los puertos por seguridad"
+                    "Configurar todos los puertos como Trunk con todas las VLANs",
+                    "Asignar cada puerto como Access a la VLAN correspondiente al departamento",
+                    "Dejar todos los puertos en la VLAN 1 por defecto sin etiquetar",
+                    "Deshabilitar los puertos y usar únicamente conexiones inalámbricas"
                 ],
                 correcta: 1,
-                explicacion: "Los puertos ACCESS se asignan a UNA sola VLAN. Las PCs de Ventas van a puertos con VLAN 10, RRHH a VLAN 20, IT a VLAN 30. El switch etiqueta internamente las tramas con el VLAN ID correspondiente."
+                explicacion: "Los puertos ACCESS se asignan a UNA sola VLAN. Las PCs de Ventas van a puertos con VLAN 10, RRHH a VLAN 20, etc. El switch etiqueta internamente las tramas con el VLAN ID correspondiente."
             },
             {
                 consigna: "El enlace entre el switch y el router (para enrutamiento inter-VLAN) debe configurarse como:",
                 tipo: "opcion",
                 opciones: [
-                    "Puerto access en una sola VLAN",
-                    "Puerto trunk (802.1Q) que transporte todas las VLANs etiquetadas",
-                    "Puerto deshabilitado",
-                    "Puerto en modo promiscuo"
+                    "Puerto Access en la VLAN nativa",
+                    "Puerto Trunk (802.1Q) que transporte todas las VLANs etiquetadas",
+                    "Puerto deshabilitado por seguridad perimetral",
+                    "Puerto en modo promiscuo para monitoreo de tráfico"
                 ],
                 correcta: 1,
-                explicacion: "El puerto TRUNK (también llamado uplink o enlace troncal) usa el estándar 802.1Q para transportar tramas de MÚLTIPLES VLANs simultáneamente, etiquetando cada una con su VLAN ID. Así el router recibe tráfico de todas las VLANs."
+                explicacion: "El puerto TRUNK (enlace troncal) usa el estándar 802.1Q para transportar tramas de MÚLTIPLES VLANs simultáneamente, etiquetando cada una con su VLAN ID. Así el router recibe tráfico de todas las VLANs."
             }
         ]
     },
@@ -243,7 +243,7 @@ const misiones = {
         tag: "MISIÓN 04",
         titulo: "Configurar Firewall",
         escenario: "La red corporativa necesita protección contra accesos no autorizados desde Internet. Se debe implementar un firewall perimetral que filtre el tráfico según políticas de seguridad estrictas.",
-        tecnico: "Un Firewall es un dispositivo de seguridad (Capa 3 a 7) que inspecciona el tráfico de red y aplica reglas de filtrado (allow/deny). Puede ser stateful (recuerda el estado de las conexiones) o stateless. Los firewalls modernos incluyen IDS/IPS, filtrado por aplicación y deep packet inspection.",
+        tecnico: "Un Firewall es un dispositivo de seguridad (Capa 3 a 7) que inspecciona el tráfico de red y aplica reglas de filtrado (allow/deny). Puede ser stateful (recuerda el estado de las conexiones) o stateless. Los firewalls modernos incluyen IDS/IPS y deep packet inspection.",
         pasos: [
             {
                 consigna: "¿Qué dispositivo se debe ubicar en el perímetro de la red, entre Internet y la red interna?",
@@ -256,34 +256,34 @@ const misiones = {
                 consigna: "¿Qué política de seguridad es la RECOMENDADA para un firewall corporativo?",
                 tipo: "opcion",
                 opciones: [
-                    "Permitir todo por defecto y bloquear lo conocido como malicioso",
-                    "Bloquear todo por defecto y permitir solo lo explícitamente necesario",
-                    "Permitir tráfico entrante libre y bloquear solo el saliente",
-                    "No aplicar políticas, dejar pasar todo el tráfico"
+                    "Default Allow: permitir todo el tráfico y bloquear solo IPs maliciosas conocidas",
+                    "Default Deny: bloquear todo el tráfico y permitir solo lo explícitamente autorizado",
+                    "Permitir todo el tráfico entrante y filtrar únicamente el tráfico saliente",
+                    "No aplicar reglas de filtrado, confiando en el antivirus de los endpoints"
                 ],
                 correcta: 1,
-                explicacion: "La política 'Default Deny' (bloquear todo por defecto) es la más segura. Solo se permiten explícitamente los servicios necesarios (web, email, VPN). Todo lo demás se descarta. Esto minimiza la superficie de ataque."
+                explicacion: "La política 'Default Deny' (bloquear todo por defecto) es la más segura. Solo se permiten explícitamente los servicios necesarios (web, email, VPN). Todo lo demás se descarta, minimizando la superficie de ataque."
             },
             {
                 consigna: "¿Qué tipo de firewall puede inspeccionar el contenido de las aplicaciones (HTTP, FTP, etc.) y no solo puertos/IPs?",
                 tipo: "opcion",
                 opciones: [
-                    "Firewall de paquete (packet filter) - solo Capa 3",
-                    "Firewall de estado (stateful) - solo Capa 4",
-                    "Firewall de aplicación (Next-Gen / NGFW) - Capa 7",
-                    "Firewall de hardware básico"
+                    "Firewall de filtrado de paquetes (Packet Filter) de Capa 3",
+                    "Firewall con inspección de estado (Stateful) de Capa 4",
+                    "Firewall de próxima generación (NGFW) con inspección profunda de paquetes (DPI)",
+                    "Firewall básico de hardware sin capacidad de registro de logs"
                 ],
                 correcta: 2,
-                explicacion: "Los NGFW (Next-Generation Firewalls) operan hasta Capa 7 (aplicación). Pueden identificar aplicaciones específicas (Facebook, Skype, torrent) independientemente del puerto, y aplicar políticas granulares basadas en usuario, aplicación y contenido."
+                explicacion: "Los NGFW (Next-Generation Firewalls) operan hasta Capa 7 (aplicación). Pueden identificar aplicaciones específicas independientemente del puerto, y aplicar políticas granulares basadas en usuario, aplicación y contenido."
             },
             {
                 consigna: "Para permitir que los empleados accedan a páginas web seguras desde la red interna, ¿qué regla se debe crear en el firewall?",
                 tipo: "opcion",
                 opciones: [
-                    "DENY TCP puerto 443 (HTTPS) desde LAN a WAN",
-                    "ALLOW TCP puerto 443 (HTTPS) desde LAN a WAN",
-                    "ALLOW UDP puerto 80 desde WAN a LAN",
-                    "DENY todo el tráfico saliente"
+                    "DENY TCP puerto 443 desde la zona LAN hacia la zona WAN",
+                    "ALLOW TCP puerto 443 desde la zona LAN hacia la zona WAN",
+                    "ALLOW UDP puerto 80 desde la zona WAN hacia la zona LAN",
+                    "DENY todo el tráfico saliente originado en la red interna"
                 ],
                 correcta: 1,
                 explicacion: "HTTPS usa TCP puerto 443. Para permitir navegación web segura desde la red interna (LAN) hacia Internet (WAN), se crea una regla ALLOW TCP 443 LAN→WAN. El firewall stateful permitirá automáticamente las respuestas."
@@ -304,11 +304,6 @@ let misionesCompletadas = 0;
 let ordenMisiones = ['vpn', 'remoto', 'switch', 'firewall'];
 let indiceMisionActual = 0;
 
-// Timer
-let timerInterval = null;
-let tiempoRestante = 30;
-const TIEMPO_POR_PASO = 30;
-
 // ============================================
 // SISTEMA DE SONIDOS (con manejo de errores)
 // ============================================
@@ -328,10 +323,7 @@ function reproducirSonido(tipo) {
     try {
         initAudio();
         if (!audioCtx) return;
-        
-        if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
-        }
+        if (audioCtx.state === 'suspended') audioCtx.resume();
         
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
@@ -354,13 +346,6 @@ function reproducirSonido(tipo) {
             gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
             osc.start(audioCtx.currentTime);
             osc.stop(audioCtx.currentTime + 0.3);
-        } else if (tipo === 'tick') {
-            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-            osc.type = 'sine';
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-            osc.start(audioCtx.currentTime);
-            osc.stop(audioCtx.currentTime + 0.05);
         } else if (tipo === 'victoria') {
             const notas = [523.25, 659.25, 783.99, 1046.50];
             notas.forEach((freq, i) => {
@@ -389,8 +374,6 @@ function registrarUsuario(e) {
     
     document.getElementById('modal-registro').style.display = 'none';
     document.getElementById('user-badge').textContent = usuario.nombre.toUpperCase();
-    
-    // Inicializar audio con la interacción del usuario
     initAudio();
 }
 
@@ -416,82 +399,6 @@ function mostrarPantalla(id) {
     document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
     document.getElementById(id).classList.add('activa');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ============================================
-// TIMER
-// ============================================
-function iniciarTimer() {
-    detenerTimer();
-    tiempoRestante = TIEMPO_POR_PASO;
-    actualizarTimerUI();
-    
-    timerInterval = setInterval(() => {
-        tiempoRestante--;
-        actualizarTimerUI();
-        
-        if (tiempoRestante <= 5 && tiempoRestante > 0) {
-            reproducirSonido('tick');
-        }
-        
-        if (tiempoRestante <= 0) {
-            detenerTimer();
-            tiempoAgotado();
-        }
-    }, 1000);
-}
-
-function detenerTimer() {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-    }
-}
-
-function actualizarTimerUI() {
-    const timerEl = document.getElementById('timer');
-    const timerBar = document.getElementById('timer-bar-fill');
-    
-    timerEl.textContent = tiempoRestante;
-    const porcentaje = (tiempoRestante / TIEMPO_POR_PASO) * 100;
-    timerBar.style.width = `${porcentaje}%`;
-    
-    if (tiempoRestante <= 10) {
-        timerEl.classList.add('urgente');
-        timerBar.classList.add('urgente');
-    } else {
-        timerEl.classList.remove('urgente');
-        timerBar.classList.remove('urgente');
-    }
-}
-
-function tiempoAgotado() {
-    const paso = misionActual.pasos[pasoActual];
-    
-    document.querySelectorAll('.dispositivo-card, .btn-opcion').forEach(el => {
-        el.style.pointerEvents = 'none';
-    });
-    
-    if (paso.tipo === 'dispositivo') {
-        const elemCorrecto = document.querySelector(`[data-dispositivo="${paso.correcta}"]`);
-        if (elemCorrecto) elemCorrecto.classList.add('correcto');
-    } else {
-        const opciones = document.querySelectorAll('.btn-opcion');
-        if (opciones[paso.correcta]) opciones[paso.correcta].classList.add('correcta');
-    }
-    
-    respuestas.push({
-        mision: misionActual.titulo,
-        paso: pasoActual + 1,
-        consigna: paso.consigna,
-        respondio: "⏱️ TIEMPO AGOTADO",
-        correcta: paso.tipo === 'dispositivo' ? dispositivos[paso.correcta].nombre : paso.opciones[paso.correcta],
-        esCorrecta: false,
-        tiempo: 0
-    });
-    
-    reproducirSonido('incorrecto');
-    mostrarFeedback(false, `⏱️ Se acabó el tiempo. ${paso.explicacion}`);
 }
 
 // ============================================
@@ -539,7 +446,6 @@ function cargarPaso() {
     
     document.getElementById('consigna-texto').textContent = paso.consigna;
     
-    // Ocultar feedback
     const feedback = document.getElementById('feedback');
     feedback.classList.remove('mostrar', 'error');
     
@@ -570,15 +476,12 @@ function cargarPaso() {
             `;
         });
     }
-    
-    iniciarTimer();
 }
 
 // ============================================
 // SELECCIONAR DISPOSITIVO
 // ============================================
 function seleccionarDispositivo(key, elemento) {
-    detenerTimer();
     const paso = misionActual.pasos[pasoActual];
     const esCorrecta = key === paso.correcta;
     
@@ -588,9 +491,8 @@ function seleccionarDispositivo(key, elemento) {
     
     if (esCorrecta) {
         elemento.classList.add('correcto');
-        const puntosBonus = Math.max(50, Math.round(100 * (tiempoRestante / TIEMPO_POR_PASO)));
-        puntajeMision += puntosBonus;
-        puntajeTotal += puntosBonus;
+        puntajeMision += 100;
+        puntajeTotal += 100;
         reproducirSonido('correcto');
     } else {
         elemento.classList.add('incorrecto');
@@ -605,8 +507,7 @@ function seleccionarDispositivo(key, elemento) {
         consigna: paso.consigna,
         respondio: dispositivos[key].nombre,
         correcta: dispositivos[paso.correcta].nombre,
-        esCorrecta: esCorrecta,
-        tiempo: tiempoRestante
+        esCorrecta: esCorrecta
     });
     
     mostrarFeedback(esCorrecta, paso.explicacion);
@@ -616,7 +517,6 @@ function seleccionarDispositivo(key, elemento) {
 // SELECCIONAR OPCIÓN
 // ============================================
 function seleccionarOpcion(idx, elemento) {
-    detenerTimer();
     const paso = misionActual.pasos[pasoActual];
     const esCorrecta = idx === paso.correcta;
     
@@ -627,9 +527,8 @@ function seleccionarOpcion(idx, elemento) {
     
     if (esCorrecta) {
         elemento.classList.add('correcta');
-        const puntosBonus = Math.max(50, Math.round(100 * (tiempoRestante / TIEMPO_POR_PASO)));
-        puntajeMision += puntosBonus;
-        puntajeTotal += puntosBonus;
+        puntajeMision += 100;
+        puntajeTotal += 100;
         reproducirSonido('correcto');
     } else {
         elemento.classList.add('incorrecta');
@@ -644,23 +543,19 @@ function seleccionarOpcion(idx, elemento) {
         consigna: paso.consigna,
         respondio: paso.opciones[idx],
         correcta: paso.opciones[paso.correcta],
-        esCorrecta: esCorrecta,
-        tiempo: tiempoRestante
+        esCorrecta: esCorrecta
     });
     
     mostrarFeedback(esCorrecta, paso.explicacion);
 }
 
 // ============================================
-// MOSTRAR FEEDBACK (CORREGIDO)
+// MOSTRAR FEEDBACK
 // ============================================
 function mostrarFeedback(esCorrecta, explicacion) {
     const feedback = document.getElementById('feedback');
-    
-    // Limpiar clases anteriores
     feedback.classList.remove('mostrar', 'error');
     
-    // Agregar clases según resultado
     if (esCorrecta) {
         feedback.classList.add('mostrar');
     } else {
@@ -679,19 +574,17 @@ function mostrarFeedback(esCorrecta, explicacion) {
         btnSiguiente.textContent = 'SIGUIENTE PASO →';
     }
     
-    // Asegurar que el botón sea visible
     btnSiguiente.style.display = 'inline-block';
     btnSiguiente.disabled = false;
     btnSiguiente.style.pointerEvents = 'auto';
 }
 
 // ============================================
-// EVENT LISTENER PARA BOTÓN SIGUIENTE (CORREGIDO)
+// EVENT LISTENER PARA BOTÓN SIGUIENTE
 // ============================================
 document.addEventListener('click', (e) => {
     if (e.target.id === 'btn-siguiente' || e.target.closest('#btn-siguiente')) {
         e.preventDefault();
-        
         pasoActual++;
         
         if (pasoActual < misionActual.pasos.length) {
@@ -713,7 +606,6 @@ document.addEventListener('click', (e) => {
 // RESULTADOS
 // ============================================
 function mostrarResultados() {
-    detenerTimer();
     reproducirSonido('victoria');
     mostrarPantalla('pantalla-final');
     
@@ -773,7 +665,6 @@ function descargarReporte() {
         contenido += `Consigna: ${r.consigna}\n`;
         contenido += `Respondiste: ${r.respondio}\n`;
         if (!r.esCorrecta) contenido += `Correcta: ${r.correcta}\n`;
-        contenido += `Tiempo restante: ${r.tiempo !== undefined ? r.tiempo + 's' : 'Agotado'}\n`;
         contenido += "\n";
     });
     
@@ -794,7 +685,6 @@ function descargarReporte() {
 // REINICIAR
 // ============================================
 function reiniciar() {
-    detenerTimer();
     misionActual = null;
     pasoActual = 0;
     puntajeTotal = 0;
