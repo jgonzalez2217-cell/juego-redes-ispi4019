@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- BARRA SUPERIOR -->
     <header class="topbar">
         <div class="topbar-left">
             <div class="logo">
@@ -34,7 +33,6 @@
     <main class="dashboard">
         <!-- PANTALLA 1: REGISTRO + BIENVENIDA -->
         <section id="pantalla-inicio" class="pantalla activa">
-            <!-- MODAL DE REGISTRO -->
             <div id="modal-registro" class="modal-registro">
                 <div class="modal-content">
                     <div class="modal-icon">👤</div>
@@ -54,10 +52,9 @@
                 </div>
             </div>
 
-            <!-- HERO -->
             <div class="hero">
                 <div class="hero-text">
-                    <span class="hero-tag">SIMULADOR TÉCNICO v3.0</span>
+                    <span class="hero-tag">SIMULADOR TÉCNICO v3.1</span>
                     <h2>Centro de Operaciones de Red</h2>
                     <p class="hero-desc">
                         Bienvenido al panel de control de infraestructura. Tu misión es resolver 
@@ -74,8 +71,8 @@
                             <span class="stat-label">Desafíos</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-num">4</span>
-                            <span class="stat-label">Dispositivos</span>
+                            <span class="stat-num">1600</span>
+                            <span class="stat-label">Puntos Máx.</span>
                         </div>
                     </div>
                 </div>
@@ -105,7 +102,7 @@
                     <h3>Configurar VPN Corporativa</h3>
                     <p>Conectar de forma segura dos sucursales a través de Internet mediante un túnel cifrado.</p>
                     <div class="mision-meta">
-                        <span>⏱ 4 pasos</span>
+                        <span>📝 4 pasos</span>
                         <span>🎯 400 pts</span>
                     </div>
                     <button class="btn-mision" onclick="iniciarMision('vpn')">INICIAR MISIÓN →</button>
@@ -120,7 +117,7 @@
                     <h3>Escritorio Remoto</h3>
                     <p>Habilitar acceso remoto a una PC de la oficina para trabajar desde casa de forma segura.</p>
                     <div class="mision-meta">
-                        <span>⏱ 4 pasos</span>
+                        <span>📝 4 pasos</span>
                         <span>🎯 400 pts</span>
                     </div>
                     <button class="btn-mision" onclick="iniciarMision('remoto')">INICIAR MISIÓN →</button>
@@ -135,7 +132,7 @@
                     <h3>Configurar Switch y Router</h3>
                     <p>Segmentar la red con VLANs y configurar el enrutamiento entre departamentos.</p>
                     <div class="mision-meta">
-                        <span>⏱ 4 pasos</span>
+                        <span>📝 4 pasos</span>
                         <span>🎯 400 pts</span>
                     </div>
                     <button class="btn-mision" onclick="iniciarMision('switch')">INICIAR MISIÓN →</button>
@@ -150,7 +147,7 @@
                     <h3>Configurar Firewall</h3>
                     <p>Proteger la red corporativa implementando reglas de filtrado y políticas de seguridad.</p>
                     <div class="mision-meta">
-                        <span>⏱ 4 pasos</span>
+                        <span>📝 4 pasos</span>
                         <span>🎯 400 pts</span>
                     </div>
                     <button class="btn-mision" onclick="iniciarMision('firewall')">INICIAR MISIÓN →</button>
@@ -186,17 +183,10 @@
                     <div class="desafio-header">
                         <div class="progreso-info">
                             <span id="paso-actual">Paso 1 de 4</span>
-                            <div class="timer-container">
-                                <span class="timer-icon">⏱️</span>
-                                <span id="timer" class="timer">30</span>
-                            </div>
                             <span id="puntaje-mision">Puntos: 0</span>
                         </div>
                         <div class="barra-progreso">
                             <div id="progreso-relleno" class="progreso-relleno"></div>
-                        </div>
-                        <div class="timer-bar">
-                            <div id="timer-bar-fill" class="timer-bar-fill"></div>
                         </div>
                     </div>
 
