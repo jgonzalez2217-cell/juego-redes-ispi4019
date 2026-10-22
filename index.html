@@ -8,10 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- MODAL DE REGISTRO (Flota sobre todo, no desacomoda nada) -->
+    <!-- MODAL DE REGISTRO -->
     <div id="modal-registro" class="modal-registro activo">
         <div class="modal-content">
-            <div class="modal-icon">👤</div>
+            <div class="modal-icon"></div>
             <h2>Registro de Operador</h2>
             <p class="modal-desc">Ingresá tus datos para generar el reporte oficial</p>
             <form id="form-registro" onsubmit="registrarUsuario(event)">
@@ -28,7 +28,6 @@
         </div>
     </div>
 
-    <!-- BARRA SUPERIOR -->
     <header class="topbar">
         <div class="topbar-left">
             <div class="logo">
@@ -44,28 +43,26 @@
                 <span class="status-dot"></span>
                 <span>SISTEMA ACTIVO</span>
             </div>
-            <button id="btn-tema" class="btn-tema" onclick="toggleTema()" title="Cambiar tema">🌙</button>
+            <button id="btn-tema" class="btn-tema" onclick="toggleTema()" title="Cambiar tema"></button>
             <div class="user-badge" id="user-badge">OPERADOR</div>
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="dashboard">
-        
-        <!-- PANTALLA 1: INICIO -->
+        <!-- PANTALLA INICIO -->
         <section id="pantalla-inicio" class="pantalla activa">
             <div class="hero">
                 <div class="hero-text">
                     <span class="hero-tag">SIMULADOR TÉCNICO v3.1</span>
                     <h2>Centro de Operaciones de Red</h2>
                     <p class="hero-desc">
-                        Bienvenido al panel de control. Tu misión es resolver <strong>4 desafíos reales</strong> 
+                        Bienvenido al panel de control. Tu misión es resolver <strong>3 desafíos reales</strong> 
                         de networking seleccionando los dispositivos correctos y aplicando las configuraciones adecuadas.
                     </p>
                     <div class="hero-stats">
-                        <div class="stat"><span class="stat-num">4</span><span class="stat-label">Misiones</span></div>
-                        <div class="stat"><span class="stat-num">16</span><span class="stat-label">Desafíos</span></div>
-                        <div class="stat"><span class="stat-num">1600</span><span class="stat-label">Puntos Máx.</span></div>
+                        <div class="stat"><span class="stat-num">3</span><span class="stat-label">Misiones</span></div>
+                        <div class="stat"><span class="stat-num">12</span><span class="stat-label">Desafíos</span></div>
+                        <div class="stat"><span class="stat-num">1200</span><span class="stat-label">Puntos Máx.</span></div>
                     </div>
                 </div>
                 <div class="hero-visual">
@@ -85,19 +82,18 @@
             </div>
 
             <div class="misiones-grid">
-                <!-- Misión 1 -->
                 <div class="mision-card">
                     <div class="mision-header">
                         <span class="mision-num">MISIÓN 01</span>
                         <span class="mision-difficulty diff-intermedio">INTERMEDIO</span>
                     </div>
-                    <div class="mision-icon">🔒</div>
+                    <div class="mision-icon"></div>
                     <h3>Configurar VPN Corporativa</h3>
                     <p>Conectar de forma segura dos sucursales a través de Internet mediante un túnel cifrado.</p>
-                    <div class="mision-meta"><span>📝 4 pasos</span><span>🎯 400 pts</span></div>
+                    <div class="mision-meta"><span> 4 pasos</span><span> 400 pts</span></div>
                     <button class="btn-mision" onclick="iniciarMision('vpn')">INICIAR MISIÓN →</button>
                 </div>
-                <!-- Misión 2 -->
+
                 <div class="mision-card">
                     <div class="mision-header">
                         <span class="mision-num">MISIÓN 02</span>
@@ -106,10 +102,10 @@
                     <div class="mision-icon">🖥️</div>
                     <h3>Escritorio Remoto</h3>
                     <p>Habilitar acceso remoto a una PC de la oficina para trabajar desde casa de forma segura.</p>
-                    <div class="mision-meta"><span>📝 4 pasos</span><span>🎯 400 pts</span></div>
+                    <div class="mision-meta"><span> 4 pasos</span><span> 400 pts</span></div>
                     <button class="btn-mision" onclick="iniciarMision('remoto')">INICIAR MISIÓN →</button>
                 </div>
-                <!-- Misión 3 -->
+
                 <div class="mision-card">
                     <div class="mision-header">
                         <span class="mision-num">MISIÓN 03</span>
@@ -118,26 +114,16 @@
                     <div class="mision-icon">🔧</div>
                     <h3>Configurar Switch y Router</h3>
                     <p>Segmentar la red con VLANs y configurar el enrutamiento entre departamentos.</p>
-                    <div class="mision-meta"><span>📝 4 pasos</span><span>🎯 400 pts</span></div>
+                    <div class="mision-meta"><span> 4 pasos</span><span> 400 pts</span></div>
                     <button class="btn-mision" onclick="iniciarMision('switch')">INICIAR MISIÓN →</button>
-                </div>
-                <!-- Misión 4 -->
-                <div class="mision-card">
-                    <div class="mision-header">
-                        <span class="mision-num">MISIÓN 04</span>
-                        <span class="mision-difficulty diff-avanzado">AVANZADO</span>
-                    </div>
-                    <div class="mision-icon">🛡️</div>
-                    <h3>Configurar Firewall</h3>
-                    <p>Proteger la red corporativa implementando reglas de filtrado y políticas de seguridad.</p>
-                    <div class="mision-meta"><span>📝 4 pasos</span><span>🎯 400 pts</span></div>
-                    <button class="btn-mision" onclick="iniciarMision('firewall')">INICIAR MISIÓN →</button>
                 </div>
             </div>
         </section>
 
-        <!-- PANTALLA 2: MISIÓN ACTIVA -->
+        <!-- PANTALLA MISIÓN -->
         <section id="pantalla-mision" class="pantalla">
+            <button class="btn-volver" onclick="volverInicio()">← VOLVER AL INICIO</button>
+            
             <div class="mision-layout">
                 <aside class="panel-info">
                     <div class="panel-header">
@@ -153,41 +139,67 @@
                             <h4>🔬 Fundamento Técnico</h4>
                             <p id="mision-tecnico">IPSec / SSL VPN.</p>
                         </div>
+                        <div class="info-section">
+                            <h4> Progreso</h4>
+                            <div class="barra-progreso">
+                                <div id="progreso-relleno" class="progreso-relleno" style="width: 25%;"></div>
+                            </div>
+                            <p class="progreso-texto" id="paso-actual">Paso 1 de 4</p>
+                        </div>
                     </div>
                 </aside>
 
                 <section class="panel-desafio">
-                    <div class="desafio-header">
-                        <div class="progreso-info">
-                            <span id="paso-actual">Paso 1 de 4</span>
-                            <span id="puntaje-mision">Puntos: 0</span>
-                        </div>
-                        <div class="barra-progreso">
-                            <div id="progreso-relleno" class="progreso-relleno" style="width: 25%;"></div>
-                        </div>
+                    <div class="consigna-box">
+                        <span class="consigna-label">CONSIGNA</span>
+                        <h3 id="consigna-texto">Selecciona el dispositivo correcto</h3>
                     </div>
-                    <div class="desafio-content">
-                        <div class="consigna-box">
-                            <span class="consigna-label">CONSIGNA</span>
-                            <h3 id="consigna-texto">Selecciona el dispositivo de borde para iniciar el túnel.</h3>
+
+                    <div id="opciones-container" class="opciones-container">
+                        <!-- Se llena dinámicamente con JS -->
+                    </div>
+
+                    <div id="feedback" class="feedback">
+                        <div class="feedback-header">
+                            <span id="feedback-icon">✅</span>
+                            <strong id="feedback-titulo">Correcto</strong>
                         </div>
-                        <div id="dispositivos-grid" class="dispositivos-grid">
-                            <!-- Se llena con JS -->
-                        </div>
-                        <div id="feedback" class="feedback">
-                            <div class="feedback-header">
-                                <span id="feedback-icon">✅</span>
-                                <strong id="feedback-titulo">Correcto</strong>
-                            </div>
-                            <p id="feedback-texto">Dispositivo adecuado.</p>
-                            <button class="btn-siguiente" onclick="siguientePaso()">SIGUIENTE PASO →</button>
-                        </div>
+                        <p id="feedback-texto">Explicación técnica aquí.</p>
+                        <button class="btn-siguiente" onclick="siguientePaso()">SIGUIENTE PASO →</button>
                     </div>
                 </section>
             </div>
         </section>
 
+        <!-- PANTALLA FINAL -->
+        <section id="pantalla-final" class="pantalla">
+            <div class="resultado-container">
+                <div class="resultado-icon">🏆</div>
+                <h2>¡Misión Completada!</h2>
+                <p class="resultado-usuario" id="resultado-usuario">Operador: -</p>
+                
+                <div class="resultado-stats">
+                    <div class="stat-card">
+                        <span class="stat-value" id="final-puntaje">0</span>
+                        <span class="stat-label">PUNTOS</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="final-correctas">0/4</span>
+                        <span class="stat-label">CORRECTAS</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="final-precision">0%</span>
+                        <span class="stat-label">PRECISIÓN</span>
+                    </div>
+                </div>
+
+                <div class="resultado-actions">
+                    <button class="btn-primario" onclick="volverInicio()">🔄 NUEVA MISIÓN</button>
+                </div>
+            </div>
+        </section>
     </main>
+
     <script src="script.js"></script>
 </body>
 </html>
