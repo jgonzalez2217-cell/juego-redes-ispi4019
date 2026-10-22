@@ -1,168 +1,205 @@
-:root {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-card: #334155;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --accent: #10b981;
-  --accent-hover: #059669;
-  --border: #475569;
-  --radius: 8px;
-  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-}
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOC Panel | ISPI 4019 - Centro de Operaciones de Red</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- MODAL DE REGISTRO -->
+    <div id="modal-registro" class="modal-registro activo">
+        <div class="modal-content">
+            <div class="modal-icon"></div>
+            <h2>Registro de Operador</h2>
+            <p class="modal-desc">Ingresá tus datos para generar el reporte oficial</p>
+            <form id="form-registro" onsubmit="registrarUsuario(event)">
+                <div class="input-group">
+                    <label for="input-nombre">Nombre completo</label>
+                    <input type="text" id="input-nombre" required placeholder="Ej: Juan Pérez">
+                </div>
+                <div class="input-group">
+                    <label for="input-legajo">Legajo / DNI</label>
+                    <input type="text" id="input-legajo" required placeholder="Ej: 12345">
+                </div>
+                <button type="submit" class="btn-primario">ACCEDER AL PANEL →</button>
+            </form>
+        </div>
+    </div>
 
-[data-theme="light"] {
-  --bg-primary: #f8fafc;
-  --bg-secondary: #ffffff;
-  --bg-card: #f1f5f9;
-  --text-primary: #0f172a;
-  --text-secondary: #64748b;
-  --border: #cbd5e1;
-  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
+    <header class="topbar">
+        <div class="topbar-left">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <div>
+                    <h1>NOC PANEL</h1>
+                    <p>ISPI 4019 · Infraestructura de TI</p>
+                </div>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span>SISTEMA ACTIVO</span>
+            </div>
+            <button id="btn-tema" class="btn-tema" onclick="toggleTema()" title="Cambiar tema"></button>
+            <div class="user-badge" id="user-badge">OPERADOR</div>
+        </div>
+    </header>
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <main class="dashboard">
+        <!-- PANTALLA INICIO -->
+        <section id="pantalla-inicio" class="pantalla activa">
+            <div class="hero">
+                <div class="hero-text">
+                    <span class="hero-tag">SIMULADOR TÉCNICO v3.1</span>
+                    <h2>Centro de Operaciones de Red</h2>
+                    <p class="hero-desc">
+                        Bienvenido al panel de control. Tu misión es resolver <strong>3 desafíos reales</strong> 
+                        de networking seleccionando los dispositivos correctos y aplicando las configuraciones adecuadas.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat"><span class="stat-num">3</span><span class="stat-label">Misiones</span></div>
+                        <div class="stat"><span class="stat-num">12</span><span class="stat-label">Desafíos</span></div>
+                        <div class="stat"><span class="stat-num">1200</span><span class="stat-label">Puntos Máx.</span></div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="network-diagram">
+                        <div class="node node-router">🌐</div>
+                        <div class="node node-switch">🔀</div>
+                        <div class="node node-pc">💻</div>
+                        <div class="node node-pc">💻</div>
+                        <svg class="connections" viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet">
+                            <line x1="150" y1="40" x2="80" y2="100" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+                            <line x1="150" y1="40" x2="220" y2="100" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+                            <line x1="80" y1="100" x2="60" y2="170" stroke="#3b82f6" stroke-width="2"/>
+                            <line x1="80" y1="100" x2="100" y2="170" stroke="#3b82f6" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
 
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  line-height: 1.5;
-  overflow-x: hidden;
-}
+            <div class="misiones-grid">
+                <div class="mision-card">
+                    <div class="mision-header">
+                        <span class="mision-num">MISIÓN 01</span>
+                        <span class="mision-difficulty diff-intermedio">INTERMEDIO</span>
+                    </div>
+                    <div class="mision-icon"></div>
+                    <h3>Configurar VPN Corporativa</h3>
+                    <p>Conectar de forma segura dos sucursales a través de Internet mediante un túnel cifrado.</p>
+                    <div class="mision-meta"><span> 4 pasos</span><span> 400 pts</span></div>
+                    <button class="btn-mision" onclick="iniciarMision('vpn')">INICIAR MISIÓN →</button>
+                </div>
 
-/* TOPBAR */
-.topbar {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1rem 2rem; background-color: var(--bg-secondary);
-  border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100;
-}
-.logo { display: flex; align-items: center; gap: 0.75rem; }
-.logo-icon { font-size: 1.5rem; }
-.logo h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.025em; }
-.logo p { font-size: 0.75rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
-.topbar-right { display: flex; align-items: center; gap: 1.5rem; }
-.status-indicator { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
-.status-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
-.btn-tema { background: none; border: 1px solid var(--border); color: var(--text-primary); padding: 0.5rem; border-radius: var(--radius); cursor: pointer; font-size: 1.2rem; }
-.user-badge { background: var(--accent); color: #fff; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+                <div class="mision-card">
+                    <div class="mision-header">
+                        <span class="mision-num">MISIÓN 02</span>
+                        <span class="mision-difficulty diff-basico">BÁSICO</span>
+                    </div>
+                    <div class="mision-icon">🖥️</div>
+                    <h3>Escritorio Remoto</h3>
+                    <p>Habilitar acceso remoto a una PC de la oficina para trabajar desde casa de forma segura.</p>
+                    <div class="mision-meta"><span> 4 pasos</span><span> 400 pts</span></div>
+                    <button class="btn-mision" onclick="iniciarMision('remoto')">INICIAR MISIÓN →</button>
+                </div>
 
-/* DASHBOARD & PANTALLAS */
-.dashboard { flex: 1; padding: 2rem; max-width: 1200px; margin: 0 auto; width: 100%; }
-.pantalla { display: none; animation: fadeIn 0.4s ease; }
-.pantalla.activa { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+                <div class="mision-card">
+                    <div class="mision-header">
+                        <span class="mision-num">MISIÓN 03</span>
+                        <span class="mision-difficulty diff-avanzado">AVANZADO</span>
+                    </div>
+                    <div class="mision-icon">🔧</div>
+                    <h3>Configurar Switch y Router</h3>
+                    <p>Segmentar la red con VLANs y configurar el enrutamiento entre departamentos.</p>
+                    <div class="mision-meta"><span> 4 pasos</span><span> 400 pts</span></div>
+                    <button class="btn-mision" onclick="iniciarMision('switch')">INICIAR MISIÓN →</button>
+                </div>
+            </div>
+        </section>
 
-/* MODAL */
-.modal-registro {
-  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
-  display: none; align-items: center; justify-content: center; z-index: 1000;
-  backdrop-filter: blur(8px);
-}
-.modal-registro.activo { display: flex; }
-.modal-content {
-  background: var(--bg-secondary); padding: 2rem; border-radius: var(--radius);
-  width: 100%; max-width: 400px; border: 1px solid var(--border); text-align: center;
-}
-.modal-icon { font-size: 3rem; margin-bottom: 1rem; }
-.modal-desc { color: var(--text-secondary); margin-bottom: 1.5rem; }
-.input-group { text-align: left; margin-bottom: 1rem; }
-.input-group label { display: block; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-secondary); }
-.input-group input {
-  width: 100%; padding: 0.75rem; border: 1px solid var(--border);
-  border-radius: var(--radius); background: var(--bg-primary); color: var(--text-primary);
-}
+        <!-- PANTALLA MISIÓN -->
+        <section id="pantalla-mision" class="pantalla">
+            <button class="btn-volver" onclick="volverInicio()">← VOLVER AL INICIO</button>
+            
+            <div class="mision-layout">
+                <aside class="panel-info">
+                    <div class="panel-header">
+                        <span class="panel-tag" id="mision-tag">MISIÓN 01</span>
+                        <h3 id="mision-titulo">Configurar VPN</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div class="info-section">
+                            <h4>📋 Escenario</h4>
+                            <p id="mision-escenario">Conectar sucursal A con B.</p>
+                        </div>
+                        <div class="info-section">
+                            <h4>🔬 Fundamento Técnico</h4>
+                            <p id="mision-tecnico">IPSec / SSL VPN.</p>
+                        </div>
+                        <div class="info-section">
+                            <h4> Progreso</h4>
+                            <div class="barra-progreso">
+                                <div id="progreso-relleno" class="progreso-relleno" style="width: 25%;"></div>
+                            </div>
+                            <p class="progreso-texto" id="paso-actual">Paso 1 de 4</p>
+                        </div>
+                    </div>
+                </aside>
 
-/* HERO */
-.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 4rem; }
-.hero-tag {
-  display: inline-block; background: rgba(16, 185, 129, 0.1); color: var(--accent);
-  padding: 0.5rem 1rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700;
-  font-family: 'JetBrains Mono', monospace; margin-bottom: 1rem; border: 1px solid rgba(16, 185, 129, 0.3);
-}
-.hero h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
-.hero-desc { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; }
-.hero-stats { display: flex; gap: 3rem; }
-.stat { text-align: center; }
-.stat-num { display: block; font-size: 2.5rem; font-weight: 800; color: var(--accent); line-height: 1; }
-.stat-label { font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.25rem; display: block; }
+                <section class="panel-desafio">
+                    <div class="consigna-box">
+                        <span class="consigna-label">CONSIGNA</span>
+                        <h3 id="consigna-texto">Selecciona el dispositivo correcto</h3>
+                    </div>
 
-/* DIAGRAMA DE RED */
-.hero-visual { display: flex; justify-content: center; align-items: center; }
-.network-diagram {
-  position: relative; width: 100%; max-width: 400px; height: 300px;
-  background: rgba(30, 41, 59, 0.5); border-radius: 1rem;
-  border: 1px solid var(--border); padding: 2rem;
-}
-.node {
-  position: absolute; width: 60px; height: 60px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
-  border-radius: 12px; display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem; box-shadow: var(--shadow); z-index: 2;
-}
-.node-router { top: 1rem; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
-.node-switch { top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
-.node-pc:first-of-type { bottom: 1rem; left: 2rem; }
-.node-pc:last-of-type { bottom: 1rem; right: 2rem; }
-.connections { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+                    <div id="opciones-container" class="opciones-container">
+                        <!-- Se llena dinámicamente con JS -->
+                    </div>
 
-/* GRID DE MISIONES */
-.misiones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
-.mision-card {
-  background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 1.5rem; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s;
-}
-.mision-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--accent); }
-.mision-header { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace; }
-.mision-num { color: var(--accent); }
-.mision-difficulty { padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.7rem; }
-.diff-basico { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
-.diff-intermedio { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
-.diff-avanzado { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
-.mision-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-.mision-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-.mision-card p { font-size: 0.9rem; color: var(--text-secondary); flex: 1; margin-bottom: 1rem; }
-.mision-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace; }
+                    <div id="feedback" class="feedback">
+                        <div class="feedback-header">
+                            <span id="feedback-icon">✅</span>
+                            <strong id="feedback-titulo">Correcto</strong>
+                        </div>
+                        <p id="feedback-texto">Explicación técnica aquí.</p>
+                        <button class="btn-siguiente" onclick="siguientePaso()">SIGUIENTE PASO →</button>
+                    </div>
+                </section>
+            </div>
+        </section>
 
-/* PANTALLA DE MISIÓN */
-.mision-layout { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; align-items: start; }
-.panel-info { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
-.panel-header { border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1rem; }
-.panel-tag { font-size: 0.75rem; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: 700; }
-.info-section { margin-bottom: 1.5rem; }
-.info-section h4 { font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-secondary); }
-.panel-desafio { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; }
-.barra-progreso { height: 6px; background: var(--bg-card); border-radius: 999px; margin-top: 0.5rem; overflow: hidden; }
-.progreso-relleno { height: 100%; background: var(--accent); transition: width 0.3s ease; }
-.consigna-box { background: var(--bg-primary); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 0 var(--radius) var(--radius) 0; margin-bottom: 2rem; }
-.consigna-label { font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 0.05em; display: block; margin-bottom: 0.5rem; }
-.dispositivos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-.dispositivo-item {
-  background: var(--bg-primary); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 1rem; text-align: center; cursor: pointer; transition: all 0.2s;
-}
-.dispositivo-item:hover { border-color: var(--accent); background: var(--bg-card); }
-.feedback { display: none; padding: 1.5rem; border-radius: var(--radius); margin-top: 1rem; }
-.feedback.visible { display: block; animation: fadeIn 0.3s ease; }
-.feedback.correcto { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent); }
+        <!-- PANTALLA FINAL -->
+        <section id="pantalla-final" class="pantalla">
+            <div class="resultado-container">
+                <div class="resultado-icon">🏆</div>
+                <h2>¡Misión Completada!</h2>
+                <p class="resultado-usuario" id="resultado-usuario">Operador: -</p>
+                
+                <div class="resultado-stats">
+                    <div class="stat-card">
+                        <span class="stat-value" id="final-puntaje">0</span>
+                        <span class="stat-label">PUNTOS</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="final-correctas">0/4</span>
+                        <span class="stat-label">CORRECTAS</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="final-precision">0%</span>
+                        <span class="stat-label">PRECISIÓN</span>
+                    </div>
+                </div>
 
-/* BOTONES */
-.btn-primario, .btn-mision, .btn-siguiente {
-  width: 100%; padding: 0.75rem; background: var(--accent); color: #fff; border: none;
-  border-radius: var(--radius); font-weight: 700; cursor: pointer; transition: background 0.2s;
-}
-.btn-primario:hover, .btn-mision:hover, .btn-siguiente:hover { background: var(--accent-hover); }
+                <div class="resultado-actions">
+                    <button class="btn-primario" onclick="volverInicio()">🔄 NUEVA MISIÓN</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .hero { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
-  .hero-stats { justify-content: center; }
-  .mision-layout { grid-template-columns: 1fr; }
-  .topbar { padding: 1rem; }
-  .logo h1 { font-size: 1rem; }
-  .logo p { display: none; }
-}
+    <script src="script.js"></script>
+</body>
+</html>
